@@ -1,0 +1,19 @@
+[13-Jan-2026 03:49:16 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: There is no active transaction in /home2/minec761/public_html/canais.net/cineroom/watch.php:90
+Stack trace:
+#0 /home2/minec761/public_html/canais.net/cineroom/watch.php(90): PDO->rollBack()
+#1 {main}
+  thrown in /home2/minec761/public_html/canais.net/cineroom/watch.php on line 90
+[13-Jan-2026 03:49:50 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home2/minec761/public_html/canais.net/cineroom/auth.php on line 11
+[13-Jan-2026 03:50:42 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home2/minec761/public_html/canais.net/cineroom/auth.php on line 11
+[13-Jan-2026 03:56:06 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home2/minec761/public_html/canais.net/cineroom/auth.php on line 11
+[13-Jan-2026 03:56:11 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home2/minec761/public_html/canais.net/cineroom/auth.php on line 11
+[13-Jan-2026 03:56:52 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: There is no active transaction in /home2/minec761/public_html/canais.net/cineroom/watch.php:90
+Stack trace:
+#0 /home2/minec761/public_html/canais.net/cineroom/watch.php(90): PDO->rollBack()
+#1 {main}
+  thrown in /home2/minec761/public_html/canais.net/cineroom/watch.php on line 90
+[13-Jan-2026 03:56:56 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: There is no active transaction in /home2/minec761/public_html/canais.net/cineroom/watch.php:90
+Stack trace:
+#0 /home2/minec761/public_html/canais.net/cineroom/watch.php(90): PDO->rollBack()
+#1 {main}
+  thrown in /home2/minec761/public_html/canais.net/cineroom/watch.php on line 90
