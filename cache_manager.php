@@ -46,7 +46,7 @@ function fetchFromAPI($action, $server, $port, $username, $password) {
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_TIMEOUT => 60, // Aumentado para 60 segundos
+        CURLOPT_TIMEOUT => 60,
         CURLOPT_HTTPHEADER => [
             "User-Agent: Mozilla/5.0"
         ]
@@ -64,7 +64,7 @@ function fetchFromAPI($action, $server, $port, $username, $password) {
     return null;
 }
 
-// Função para processar filmes
+// Função para processar filmes - ATUALIZADA para salvar cover/stream_icon
 function processMovies($movies) {
     if (!is_array($movies)) return [];
     
@@ -73,7 +73,7 @@ function processMovies($movies) {
         $id = $movie['stream_id'] ?? $movie['num'] ?? null;
         if (!$id) continue;
         
-        $processed[] = [
+        $item = [
             'id' => $id,
             'name' => $movie['name'] ?? $movie['title'] ?? 'Sem título',
             'container' => $movie['container_extension'] ?? 'mp4',
@@ -82,6 +82,16 @@ function processMovies($movies) {
             'category_id' => $movie['category_id'] ?? null,
             'added' => $movie['added'] ?? null
         ];
+        
+        // NOVO: Salva cover e stream_icon se existirem
+        if (isset($movie['cover']) && !empty($movie['cover'])) {
+            $item['cover'] = $movie['cover'];
+        }
+        if (isset($movie['stream_icon']) && !empty($movie['stream_icon'])) {
+            $item['stream_icon'] = $movie['stream_icon'];
+        }
+        
+        $processed[] = $item;
     }
     return $processed;
 }
@@ -145,7 +155,7 @@ switch ($action) {
         
     case 'update':
         // Atualiza cache GLOBAL
-        $type = $_GET['type'] ?? 'all'; // all, movies, series
+        $type = $_GET['type'] ?? 'all';
         $result = ['success' => true, 'updated' => [], 'errors' => []];
         
         if ($type === 'all' || $type === 'movies') {
@@ -206,7 +216,7 @@ switch ($action) {
         
     case 'get':
         // Retorna conteúdo do cache
-        $type = $_GET['type'] ?? 'movies'; // movies, series
+        $type = $_GET['type'] ?? 'movies';
         $search = $_GET['search'] ?? '';
         
         $file = $type === 'movies' ? $MOVIES_CACHE : $SERIES_CACHE;
@@ -224,7 +234,7 @@ switch ($action) {
             $data = array_filter($data, function($item) use ($search) {
                 return stripos($item['name'], $search) !== false;
             });
-            $data = array_values($data); // Reindex
+            $data = array_values($data);
         }
         
         header('Content-Type: application/json');

@@ -6,9 +6,15 @@
 
 require_once __DIR__ . '/database.php';
 
-// Inicia sessão se ainda não foi iniciada
+// Inicia sessão se ainda não foi iniciada - CORRIGIDO
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+    // Verifica se headers já foram enviados
+    if (!headers_sent($file, $line)) {
+        session_start();
+    } else {
+        // Debug apenas em desenvolvimento
+        // error_log("Headers já enviados em $file linha $line");
+    }
 }
 
 // ========================================
@@ -19,8 +25,10 @@ function login($email, $password) {
     $user = authenticateUser($email, $password);
     
     if ($user) {
-        // Regenera ID da sessão para segurança
-        session_regenerate_id(true);
+        // Regenera ID da sessão para segurança (só se sessão estiver ativa)
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
         
         // Armazena dados do usuário na sessão
         $_SESSION['user_id'] = $user['id'];
@@ -45,7 +53,9 @@ function logout() {
     }
     
     // Destrói a sessão
-    session_destroy();
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_destroy();
+    }
 }
 
 // ========================================

@@ -287,17 +287,6 @@ $userCredits = $currentUser ? $currentUser['credits'] : 0;
     </style>
 </head>
 <body>
-<?php
-require_once 'config.php';
-require_once 'database.php';
-require_once 'auth.php';
-
-// Verifica modo manutenção
-checkMaintenanceMode();
-
-$currentUser = getCurrentUser();
-$userCredits = $currentUser ? $currentUser['credits'] : 0;
-?>
 
     <div class="header">
         <div class="logo">
